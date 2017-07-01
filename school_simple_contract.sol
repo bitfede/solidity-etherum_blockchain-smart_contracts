@@ -12,21 +12,37 @@ contract School {
 
 	mapping(address => Student) public myStudents;
 
-	function register (string _myName, uint myAge) {
+	function School (uint256 initialRegistrationFee) {
 
-		myStudents[msg.sender] = Student({
-
-			studentName: _myName,
-			studentAge: _myAge,
-			active: true
-
-			});
+		registrationFee = initialRegistrationFee;
+		
 	}
 
-	function setFee(uint256 _newRegistrationFee) {
+	function register (string _myName, uint myAge) {
+
+		if (msg.value == registrationFee) {
+
+			myStudents[msg.sender] = Student({
+
+				studentName: _myName,
+				studentAge: _myAge,
+				active: true
+
+				});
+
+		}
+		else {
+
+			throw;
+
+		}
+
+	}
+
+	function setFee (uint256 _newRegistrationFee) {
 
 		registrationFee = _newRegistrationFee;
-		
+
 	}
 
 }
