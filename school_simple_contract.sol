@@ -10,7 +10,16 @@ contract School {
 
 	mapping(address => Student) public myStudents;
 
+	function register (string _myName, uint myAge) {
 
+		myStudents[msg.sender] = Student({
+
+			studentName: _myName,
+			studentAge: _myAge,
+			active: true
+			
+			});
+	}
 
 
 
