@@ -38,7 +38,8 @@ contract OwnedByFederico {
 
   } 
 
-  function killTheContract() {
+  // here I added the onlyOwner modifier, now only the owner of the contract can kill it by executing this function!
+  function killTheContract() onlyOwner {
 
   	suicide(owner);
 
@@ -89,7 +90,8 @@ contract ProgrammingSchool is OwnedByFederico {
 
 	}
 
-	function setFee (uint256 _newRegistrationFee) {
+  // here I added the onlyOwner modifier, now only the owner of the contract can change the course/school fee
+	function setFee (uint256 _newRegistrationFee) onlyOwner {
 
 		registrationFee = _newRegistrationFee;
 
