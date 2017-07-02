@@ -38,7 +38,7 @@ contract OwnedByFederico {
 
   } 
 
-  // here I added the onlyOwner modifier, now only the owner of the contract can kill it by executing this function!
+  // here I added the `onlyOwner` modifier, now only the owner of the contract can kill it by executing this function!
   function killTheContract() onlyOwner {
 
   	suicide(owner);
@@ -90,8 +90,31 @@ contract ProgrammingSchool is OwnedByFederico {
 
 	}
 
-  // here I added the onlyOwner modifier, now only the owner of the contract can change the course/school fee
-	function setFee (uint256 _newRegistrationFee) onlyOwner {
+	// for additional safety for the school students, I'm adding another modifier that allows the owner to
+	// modify the fee of registration, ONLY after a month has passed from the contract deployment date.
+	// again this increases trust in students because they know that for a month the school fee will not change.
+
+	modifier onlyAfterOneMonth {
+		
+		// now is a built in function is solidity, and takes the timestamp of the current block. timestamp is in UNIX format.
+		// Solidity support native language time suffix: minutes, hours, days, weeks and years.
+    if (now < 1499008603 + 30 days) {
+
+    	// following code is the same as the modifier `onlyOwner` above
+    	throw;
+
+    }
+    else {
+
+    	_
+
+    }
+	}
+
+
+  // here I added the `onlyOwner` modifier, now only the owner of the contract can change the course/school fee.
+  // I also added the `onlyAfterOneMonth` modifier, to give additional security and peace of mind to students.
+	function setFee (uint256 _newRegistrationFee) onlyOwner onlyAfterOneMonth {
 
 		registrationFee = _newRegistrationFee;
 
