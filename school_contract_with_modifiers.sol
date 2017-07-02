@@ -59,12 +59,18 @@ contract ProgrammingSchool is OwnedByFederico {
 	}
 
 	uint256 public registrationFee;
+	//added this variable to keep track of timestamps of fee updates/sets
+	uint256 public timestampOfLastFeeUpdate;
 
 	mapping(address => Student) public myStudents;
 
-	function ProgrammingSchool (uint256 initialRegistrationFee) {
+	function ProgrammingSchool (uint256 _initialRegistrationFee) {
 
-		registrationFee = initialRegistrationFee;
+		registrationFee = _initialRegistrationFee;
+
+		//added this: to take a timestamp of initial fee creation
+    timestampOfLastFeeUpdate = now;
+
 
 	}
 
@@ -92,13 +98,13 @@ contract ProgrammingSchool is OwnedByFederico {
 
 	// for additional safety for the school students, I'm adding another modifier that allows the owner to
 	// modify the fee of registration, ONLY after a month has passed from the contract deployment date.
-	// again this increases trust in students because they know that for a month the school fee will not change.
+	// again this increases trust in students because they know that the fee cannot change for more than once a month.
 
 	modifier onlyAfterOneMonth {
 		
 		// now is a built in function is solidity, and takes the timestamp of the current block. timestamp is in UNIX format.
 		// Solidity support native language time suffix: minutes, hours, days, weeks and years.
-    if (now < 1499008603 + 30 days) {
+    if (now < timestampOfLastFeeUpdate + 30 days) {
 
     	// following code is the same as the modifier `onlyOwner` above
     	throw;
@@ -117,6 +123,9 @@ contract ProgrammingSchool is OwnedByFederico {
 	function setFee (uint256 _newRegistrationFee) onlyOwner onlyAfterOneMonth {
 
 		registrationFee = _newRegistrationFee;
+
+		//re-update the timestamp of when the fee was changed last time.
+		timestampOfLastFeeUpdate = now;
 
 	}
 
