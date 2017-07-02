@@ -2,7 +2,9 @@
 // DATE: 			Jul 2nd 2017
 // PURPOSE: 	This smart contract aims to introduce in a very simple way the notion of MODIFIERS in Solidity.
 //						It will be accomplished by creating an "onlyOwner" modifier that will be used to secure some critical
-//						function in our school contract that were previously unrestricted from the public
+//						function in our school contract that were previously unrestricted from the public.
+//						Another modifier that will be added is `onlyAfterOneMonth`, which will give safety to students because it
+//						will restrict the owner by not letting him change the school registration fee for more than once a month
 // LANGUAGE:  Solidity
 
 
