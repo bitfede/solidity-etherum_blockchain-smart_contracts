@@ -24,20 +24,25 @@ contract Employee {
 
 }
 
+//this contract will interact with the employee contract directly
 contract Employer {
 
 	address public employeeAddress;
 
+	//constructor will force the creator to deploy the Employer contract with an address for the employee
 	function Employer(address _addressOfTheEmployee) {
 
 		employeeAddress = _addressOfTheEmployee;
 		
 	}
 
+  //this function will interact with the previous contract to call its function
 	function assignRoleToEmployee(string _role) {
-
+    
+    //we need the address of the employee contract in order to be able to instantiate it.
 		Employee myEmployee = Employee(employeeAddress);
+		//here we are calling the function of employee and passing in the arg
 		myEmployee.setEmployeeRole(_role);
-		
+
 	}
 }
