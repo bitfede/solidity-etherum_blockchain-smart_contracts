@@ -24,3 +24,20 @@ contract Employee {
 
 }
 
+contract Employer {
+
+	address public employeeAddress;
+
+	function Employer(address _addressOfTheEmployee) {
+
+		employeeAddress = _addressOfTheEmployee;
+		
+	}
+
+	function assignRoleToEmployee(string _role) {
+
+		Employee myEmployee = Employee(employeeAddress);
+		myEmployee.setEmployeeRole(_role);
+		
+	}
+}
