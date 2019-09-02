@@ -30,6 +30,7 @@ contract faucet {
   // define a contract destructor function
   function destroy() public {
     require(msg.sender == owner);
+    selfdestruct(owner);
   }
 
 }
