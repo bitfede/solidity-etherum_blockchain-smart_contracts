@@ -1,5 +1,5 @@
 // ***
-// improves the previous contract code by the use of of inheritance
+// improves the previous contract code by using events
 // ***
 
 // Version of the solidity compiler
@@ -31,14 +31,23 @@ contract mortal is owned {
 
 // ---- the faucet contract
 contract Faucet is mortal {
+
+  // events!! "indexed" makes the value part of an indexed table (hash table)
+  event Withdrawal(address indexed to, uint amount);
+  event Deposit(address indexed from, uint amount);
+
   //give ether out to anyone who asks
   function withdraw(uint withdraw_amount) public {
     //limit withdrawal amount
     require(withdraw_amount <= 0.1 ether);
     //send the amt to the addr that requested it
     msg.sender.transfer(withdraw_amount);
+    // EMIT the event here!
+    emit Withdrawal(msg.sender, withdraw_amount);
   }
 
   //accept any ether from transactions
-  function () public payable {}
+  function () public payable {
+    emit Deposit(msg.sender, msg.value);
+  }
 }
