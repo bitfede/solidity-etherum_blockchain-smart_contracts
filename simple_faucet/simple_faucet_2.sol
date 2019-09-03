@@ -27,9 +27,14 @@ contract faucet {
   function () public payable {}
   //-------end of the contract code from simple_faucet_1.sol
 
-  // define a contract destructor function
-  function destroy() public {
+  //defines a modifier
+  modifier onlyOwner {
     require(msg.sender == owner);
+    _;
+  }
+
+  // define a contract destructor function
+  function destroy() public onlyOwner {
     selfdestruct(owner);
   }
 
